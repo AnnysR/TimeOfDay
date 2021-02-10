@@ -17,52 +17,44 @@
 
 public class TimeOfDay {
 	
-
+	/**
+	 * @invar minutesSinceMidnight is between 0 (inclusive) and 60 * 24 (exclusive)
+	 *      | 0 <= minutesSinceMidnight && minutesSinceMidnight < 60 * 24
+	 */
 	
-	private int hour;
-	private int minute;
+	private int minutesSinceMidnight;
 	
 	/**
-	 * @post getHour() == initHour
-	 * @post getMinute() == initMinute
+	 * @post getHour() == hour
+	 * @post getMinute() == minute
+	 * @throws illegalArgumentException if minutes or hours do not respect boundaries.
 	 * 
 	 */
 	
-	public TimeOfDay(int initHour, int initMinute){
-		this.hour = initHour;
-		this.minute = initMinute;
+	public TimeOfDay(int hour, int minute){
+		if(hour >= 0  && hour <= 23) {
+			if(minute >=0 && minute <= 59) {
+				minutesSinceMidnight = 60* hour + minute;
+			}
+			else {
+				throw new IllegalArgumentException("hours out of range");
+			}
+		}
+		else {
+			throw new IllegalArgumentException("minutes out of range");
+		}
 	}
 
 	public int getHour() {
-		return this.hour;
+		return this.minutesSinceMidnight / 60;
 	}
 	
 	public int getMinute() {
-		return this.minute;
+		return this.minutesSinceMidnight % 60;
 	}
 	
-	/**
-	 * @post het uur (Hour) van de tijd is gelijk aan gegeven uur.
-	 * 		| this.getHour() == hour
-	 * @post De minuten blijven ongewijzigd
-	 * 		| this.getMinute() == old(this.getMinute())
-	 * 
-	 */
-	public void setHour(int hour) {
-		this.hour = hour;
-	}
+
 	
-	
-	/**
-	 * @post De minuten van de tijd is gelijk aan de gegeven minuten.
-	 * 		| this.getMinute() == minute
-	 * @post Het uur blijven ongewijzigd
-	 * 		| this.getHour() == old(this.getHour())
-	 * 
-	 */
-	public void setMinute(int minute) {
-		this.minute = minute;
-	}
 	
 
 	
